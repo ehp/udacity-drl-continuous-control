@@ -1,0 +1,4 @@
+checkpoint*.pth
+Reacher*/
+unity-environment.log
+.venv/
