@@ -38,7 +38,6 @@ if __name__ == '__main__':
 
     # load nn
     agent.actor_local.load_state_dict(torch.load(args.actor_model, map_location=lambda storage, loc: storage))
-    agent.critic_local.load_state_dict(torch.load(args.critic_model, map_location=lambda storage, loc: storage))
 
     state = env_info.vector_observations[0]            # get the current state
     score = 0                                          # initialize the score
