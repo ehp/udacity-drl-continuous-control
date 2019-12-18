@@ -31,13 +31,13 @@ class Agent():
 
         self._update_buffer_priorities = False
 
-        # Noise process
-        self.noise = OUNoise(action_size, self.seed)
-
         if args.cuda:
             self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         else:
             self.device = "cpu"
+
+        # Noise process
+        self.noise = OUNoise(action_size, self.seed, device=self.device)
 
         # NN
         if training:
@@ -54,7 +54,6 @@ class Agent():
             self.critic_local = Critic(state_size, action_size, self.seed).to(self.device)
             self.critic_target = Critic(state_size, action_size, self.seed).to(self.device)
             self.critic_optimizer = optim.Adam(self.critic_local.parameters(), lr=args.critic_learning_rate)
-            # TODO self.critic_optimizer = optim.Adam(self.critic_local.parameters(), lr=args.critic_learning_rate, weight_decay=WEIGHT_DECAY)
 
             # Replay memory
             self.memory = self._create_buffer(args.buffer.lower(), action_size, args.buffer_size,
@@ -178,22 +177,23 @@ class Agent():
 class OUNoise:
     """Ornstein-Uhlenbeck process."""
 
-    def __init__(self, size, seed, mu=0., theta=0.15, sigma=0.2):
+    def __init__(self, size, seed, mu=0., theta=0.15, sigma=0.05, device='cpu'):
         """Initialize parameters and noise process."""
         self.size = size
         self.mu = mu
         self.theta = theta
         self.sigma = sigma
+        self.device = device
         torch.manual_seed(seed)
         self.reset()
 
     def reset(self):
         """Reset the internal state (= noise) to mean (mu)."""
-        self.state = self.mu * torch.ones(self.size)
+        self.state = self.mu * torch.ones(self.size).to(self.device)
 
     def sample(self):
         """Update internal state and return it as a noise sample."""
         x = self.state
-        dx = self.theta * (self.mu * torch.ones(self.size) - x) + self.sigma * torch.rand(len(x))
+        dx = self.theta * (self.mu * torch.ones(self.size).to(self.device) - x) + self.sigma * torch.rand(len(x)).to(self.device)
         self.state = x + dx
         return self.state
