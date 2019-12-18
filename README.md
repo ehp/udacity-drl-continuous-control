@@ -5,6 +5,7 @@
 This project train one agent (option 1) to move a double-jointed arm to target locations.
 A reward of +0.1 is provided for each step that the agent's hand is in the goal location.
 Thus, the goal of this agent is to maintain its position at the target location for as many time steps as possible.
+The agent must receive an average reward (over 100 episodes) of at least +30.
 
 * Link to [original repository](https://github.com/udacity/deep-reinforcement-learning/tree/master/p2_continuous-control).
 * Link to [training reports](Report.md).
@@ -61,14 +62,14 @@ All training parameters:
 |--episodes|Maximum number of training episodes|2000|
 |--frames|Maximum number of frames in training episode|1000|
 |--target|Desired minimal average per 100 episodes|30.0|
-|--buffer_size|Replay buffer size|100000|
-|--batch_size|Minibatch size|64|
-|--gamma|Discount factor|0.99|
-|--tau|For soft update of target parameters|0.01|
+|--buffer_size|Replay buffer size|1000000|
+|--batch_size|Minibatch size|1024|
+|--gamma|Discount factor|0.85|
+|--tau|For soft update of target parameters|0.001|
 |--alpha|Prioritized buffer - How much prioritization is used (0 - no prioritization, 1 - full prioritization)|0.5|
 |--beta|Prioritized buffer - To what degree to use importance weights (0 - no corrections, 1 - full correction)|0.5|
-|--actor_learning_rate|Learning rate|0.001|
-|--critic_learning_rate|Learning rate|0.005|
+|--actor_learning_rate|Learning rate|0.0005|
+|--critic_learning_rate|Learning rate|0.0005|
 |--cuda/--no_cuda|Force disable CUDA or autodetect|Autodetect|
 
 ## Testing

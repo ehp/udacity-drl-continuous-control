@@ -71,21 +71,21 @@ if __name__ == '__main__':
     parser.add_argument('--target', type=float, help='Desired minimal average per 100 episodes',
                         default=30.0)
     parser.add_argument('--buffer_size', type=int, help='Replay buffer size',
-                        default=100000)
+                        default=1000000)
     parser.add_argument('--batch_size', type=int, help='Minibatch size',
-                        default=64)
+                        default=1024)
     parser.add_argument('--gamma', type=float, help='Discount factor',
-                        default=0.99)
+                        default=0.85)
     parser.add_argument('--tau', type=float, help='For soft update of target parameters',
-                        default=0.01)
+                        default=0.001)
     parser.add_argument('--alpha', type=float, help='Prioritized buffer - How much prioritization is used (0 - no prioritization, 1 - full prioritization)',
                         default=0.5)
     parser.add_argument('--beta', type=float, help='Prioritized buffer - To what degree to use importance weights (0 - no corrections, 1 - full correction)',
                     default=0.5)
     parser.add_argument('--actor_learning_rate', type=float, help='Actor learning rate',
-                        default=0.001)
+                        default=0.0005)
     parser.add_argument('--critic_learning_rate', type=float, help='Critic learning rate',
-                        default=0.005)
+                        default=0.0005)
     parser.add_argument('--cuda', dest='cuda', action='store_true')
     parser.add_argument('--no_cuda', dest='cuda', action='store_false')
     parser.set_defaults(cuda=True)
@@ -118,6 +118,6 @@ if __name__ == '__main__':
     plt.plot(np.arange(len(scores)), scores)
     plt.ylabel('Score')
     plt.xlabel('Episode #')
-    plt.savefig(args.model + '.png')
+    plt.savefig(args.actor_model + '.png')
 
     env.close()
