@@ -89,7 +89,7 @@ All testing parameters:
 |--critic_model|Path to save critic model|checkpoint_critic.pth|
 |--cuda/--no_cuda|Force disable CUDA or autodetect|Autodetect|
 
-Pretrained models for [actor](models/checkpoint_actor.pth) and [critic](models/checkpoint_critic.pth). 
+Pretrained models for [actor](models/actor.pth) and [critic](models/critic.pth). 
 
 ## Future work
 
